@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
 
 im_color = cv.imread("red.png", cv.IMREAD_COLOR)
 hsv = cv.cvtColor(im_color, cv.COLOR_BGR2HSV)
@@ -28,9 +27,11 @@ for contour in contours:
     else:
         right_cones.append(contour)
 
+#draw contours for left and right cones on final
 cv.drawContours(im_color, left_cones, -1, (0, 255, 0), 3) 
 cv.drawContours(im_color, right_cones, -1, (255, 0, 0), 3) 
 
+#combine all clusters for line fitting
 left = left_cones[0]
 for i in range(1, len(left_cones)):
     left = np.concatenate((left, left_cones[i]), axis = 0)
@@ -50,7 +51,7 @@ r_int1 = int((-x * vy / vx) + y)
 r_int2 = int(((cols - x) * vy / vx) + y)
 cv.line(im_color, (cols - 1, r_int2), (0, r_int1), (255, 0, 0), 2)
 
-#cv.imshow('Contours', im_color)
+cv.imshow('Contours', im_color)
 cv.imwrite('./final.png',im_color) 
 cv.waitKey(0) 
 cv.destroyAllWindows()
