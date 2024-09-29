@@ -11,7 +11,7 @@ upper_red = np.array([10,230,230])
 
 mask = cv.inRange(hsv, lower_red, upper_red)
 
-cv.imshow("binary_mask", mask)
+#cv.imshow("binary_mask", mask)
 
 #find contours
 edged = cv.Canny(mask, 30, 200)
@@ -38,9 +38,6 @@ right = right_cones[0]
 for i in range(1, len(right_cones)):
     right = np.concatenate((right, right_cones[i]), axis = 0)
 
-print(left)
-print(right)
-
 #fit and draw lines
 rows,cols = im_color.shape[:2]
 [vx,vy,x,y] = cv.fitLine(left, cv.DIST_L2, 0, 0.01, 0.01)
@@ -53,7 +50,7 @@ r_int1 = int((-x * vy / vx) + y)
 r_int2 = int(((cols - x) * vy / vx) + y)
 cv.line(im_color, (cols - 1, r_int2), (0, r_int1), (255, 0, 0), 2)
 
-cv.imshow('Contours', im_color)
+#cv.imshow('Contours', im_color)
 cv.imwrite('./final.png',im_color) 
 cv.waitKey(0) 
 cv.destroyAllWindows()
